@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Invoices";
+}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<h2>Index</h2>
+@using (Html.BeginForm("AddNewInvoice", "Invoice", FormMethod.Get))
+{
+
+    <button class="btn btn-primary">Add Invoice</button>
+}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Company Name</th>
+            <th scope="col">Invoice Date</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td> @item.CompanyName</td>
+                    <td>@item.InvoiceDate</td>
+                    <td>@item.StartDate</td>
+                    <td>@item.EndDate</td>
+                    <td>
+                        <a href="EditInvoice/@item.CompanyInvoiceId/@item.CompanyName"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+                    </td>
+                    <td><a href="InvoiceDetails/@item.CompanyInvoiceId/@item.CompanyName"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a></td>
+                    <td>
+                        @using (Html.BeginForm("DeleteInvoice", "Invoice", new {id = item.CompanyInvoiceId, companyName = item.CompanyName }))
+                        {
+                            <input type="submit" />
+                        }
+                    </td>
+                </tr>
+            };
+
+        }
+
+    </tbody>
+</table>
